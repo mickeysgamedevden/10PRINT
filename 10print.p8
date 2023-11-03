@@ -1,0 +1,68 @@
+pico-8 cartridge // http://www.pico-8.com
+version 41
+__lua__
+-- 10 print chr$(205.5+rnd(1));
+--    : goto 10 adaptation for pico-8
+
+--[[
+use the following code lines in
+interactive mode:
+
+-- the original c64 10-print-pattern
+while true do if (flr(rnd(1)+.5)==0) then print("\^:c0e070381c0e0703\0") else print("\^:03070e1c3870e0c0\0") end end
+
+-- a pico-8 █▒-pattern
+while true do print(chr(128+4*(flr(rnd(1)+.5))).."\0") end
+
+-- a pico-8 ▤▥-pattern
+while true do print(chr(152+(flr(rnd(1)+.5))).."\0") end
+
+]]--
+
+counter=0
+char_to_print=""
+pattern=1
+
+menuitem(1, "c64 pattern",
+	function() cls() counter=0 pattern=1 end
+)
+
+menuitem(2, "█▒ pattern",
+	function() cls() counter=0 pattern=2 end
+)
+
+menuitem(3, "▤▥ pattern",
+	function() cls() counter=0 pattern=3 end
+)
+
+function _init()
+ cls()
+end
+
+function _update()
+	if pattern==1 then
+ 	if (flr(rnd(1)+.5)==0) then
+ 		char_to_print="\^:c0e070381c0e0703\0"
+ 	else
+ 		char_to_print="\^:03070e1c3870e0c0\0"
+ 	end
+	elseif pattern==2 then
+		char_to_print=chr(128+4*(flr(rnd(1)+.5))).."\0"
+ else
+		char_to_print=chr(152+(flr(rnd(1)+.5))).."\0"
+ end
+end
+
+function _draw()
+	print(char_to_print)
+	counter+=1
+	if counter % 16 == 0 then print("\r") end
+end
+
+__gfx__
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
